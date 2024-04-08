@@ -9,15 +9,6 @@
             <label for="Department_Name">Department Name:</label>
             <input type="text" class="form-control" id="Department_Name" name="Department_Name" required>
         </div>
-        <div class="form-group">
-            <label for="course_id">Course ID:</label>
-            <input type="text" class="form-control" id="course_id" name="course_id" required>
-        </div>
-
-        <div class="form-group">
-            <label for="teacher_id">Teacher ID:</label>
-            <input type="text" class="form-control" id="teacher_id" name="teacher_id" required>
-        </div>
         <!-- You can add more form fields as needed -->
 
         <button type="submit" class="btn btn-primary">Submit</button>

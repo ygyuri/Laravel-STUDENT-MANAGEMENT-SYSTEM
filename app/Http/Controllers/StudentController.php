@@ -70,16 +70,17 @@ class StudentController extends Controller
 
 
      public function studentDashboard()
-     {
-         // Retrieve the currently authenticated student
-         $student = Auth::user();
+{
+    // Retrieve the currently authenticated student
+    $student = Auth::user();
 
-         // Load the associated course, teacher, and department
-         $student->load('course', 'teacher', 'department');
+    // Load the associated course and its department
+    $student->load('course.department');
 
-         // Pass student details to the view
-         return view('Student.studentdashboard', compact('student'));
-     }
+    // Pass student details to the view
+    return view('Student.studentdashboard', compact('student'));
+}
+
 
 
 

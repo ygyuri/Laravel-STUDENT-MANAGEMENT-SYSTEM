@@ -124,6 +124,9 @@ Route::view('profile', 'profile')
 Route::get('/general', [GeneralController::class, 'index'])->name('general');
 // General Controller Route for POST method
 Route::post('/general', [GeneralController::class, 'index'])->name('general');
+//googlemaps page Api integration
+Route::get('/googlemaps', [GeneralController::class, 'showMap'])->name('googlemaps');
+
 
 
 // Laravel Authentication Routes

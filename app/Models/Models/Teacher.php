@@ -22,9 +22,8 @@ class Teacher extends Authenticatable
         'name',
         'password',
         'email',
-        'Department_Name',
         'department_id',
-        // Remove 'course_id' from here
+        
         // Add other fillable fields here if needed
     ];
 

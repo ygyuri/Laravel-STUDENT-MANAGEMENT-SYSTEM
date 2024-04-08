@@ -61,11 +61,15 @@
                             <label for="course_id">Course ID:</label>
                             <input type="number" class="form-control" id="course_id" name="course_id" placeholder="Course ID" required>
                         </div>
+                        <div class="form-group">
+                            <label for="teacher_id">Teacher ID:</label>
+                            <input type="number" class="form-control" id="teacher_id" name="teacher_id" placeholder="Teacher ID" required>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="fees">Fees:</label>
-                            <input type="number" class="form-control" id="fees" name="fees" placeholder="Fees" required>
+                            <label for="fee_balance">Fee Balance:</label>
+                            <input type="number" class="form-control" id="fee_balance" name="fee_balance" placeholder="Fee Balance" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Password:</label>
@@ -85,8 +89,6 @@
         };
     </script>
 @endif
-
-
 
 </body>
 </html>

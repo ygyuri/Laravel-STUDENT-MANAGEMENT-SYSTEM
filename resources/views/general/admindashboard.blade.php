@@ -38,6 +38,9 @@
 
                <li><a href="{{ route('admin.view.departments') }}">View Departments</a></li>
                <li><a href="{{ route('admin.add.department') }}">Add Department</a></li>
+               <li><a href="{{ route('googlemaps') }}">Search Locations</a></li>
+
+
 
 
 

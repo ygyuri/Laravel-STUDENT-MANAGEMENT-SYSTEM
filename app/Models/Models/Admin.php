@@ -17,7 +17,7 @@ class Admin extends AuthenticatableUser implements Authenticatable
         'name',
         'email',
         'password',
-        'department',
+       
     ];
 
     protected $hidden = [
@@ -28,4 +28,12 @@ class Admin extends AuthenticatableUser implements Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+     /**
+     * Get the department that the admin belongs to.
+     */
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

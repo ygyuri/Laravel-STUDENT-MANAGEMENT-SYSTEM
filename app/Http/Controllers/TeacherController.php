@@ -70,30 +70,41 @@ class TeacherController extends Controller
 
 
 
-    /**
-     * View all students.
-     *
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function viewStudents()
-    {
+   /**
+ * View all students associated with the logged-in teacher.
+ *
+ * @return \Illuminate\Contracts\View\View
+ */
+
+
+public function viewStudents()
+{
     // Retrieve the currently authenticated teacher
     $teacher = Auth::user();
 
     // Retrieve the courses taught by the teacher with their associated departments
     $courses = $teacher->courses()->with('department')->get();
 
-    // Retrieve the IDs of the departments associated with the courses
-    $departmentIds = $courses->pluck('department.id')->unique();
+    // Initialize an empty array to store department and course IDs
+    $departmentIds = [];
+    $courseIds = [];
 
-    // Retrieve the students associated with the courses and departments
-    $students = Student::whereHas('course', function ($query) use ($courses) {
-        $query->whereIn('id', $courses->pluck('id'));
+    // Retrieve the IDs of the departments and courses associated with the teacher's courses
+    foreach ($courses as $course) {
+        $departmentIds[] = $course->department_id;
+        $courseIds[] = $course->id;
+    }
+
+    // Retrieve the students associated with the departments and courses taught by the teacher
+    $students = Student::whereHas('course', function ($query) use ($courseIds) {
+        $query->whereIn('id', $courseIds);
     })->whereIn('department_id', $departmentIds)->get();
 
     // Return the view with the filtered students data along with courses and departments
     return view('Teacher.view_student', compact('students', 'courses'));
-    }
+}
+
+
 
 
 

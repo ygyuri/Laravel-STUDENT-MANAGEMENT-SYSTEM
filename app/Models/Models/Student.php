@@ -16,6 +16,7 @@ class Student extends Authenticatable
         'password',
         'email',
         'course_id',
+        'teacher_id',
         // Remove 'department_id' from the $fillable array as it's not a direct attribute of the students table
     ];
 

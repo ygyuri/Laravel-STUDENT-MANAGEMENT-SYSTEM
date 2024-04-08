@@ -31,14 +31,14 @@ ul
 	margin-right: 20px;
 }
 
-ul li 
+ul li
 {
 	display: inline-block;
 	line-height: 70px;
 	margin: 0 5px;
 }
 
-ul li a 
+ul li a
 {
 	text-decoration: underline;
 	color: #FF7F50;
@@ -103,7 +103,7 @@ ul li a
 	height: 40px;
 	border-radius: 25px;
 	border: 1px solid blue;
-	 
+
 }
 
 .adm_int
@@ -194,4 +194,45 @@ footer
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: 100% 100%;
+}
+/* CSS for the map container */
+.map-container {
+    margin-top: 20px; /* Adjust as needed */
+    width: 100%; /* Ensure full width */
+    background-color: #f5f5f5; /* Optional: Set background color */
+    border: 1px solid #ddd; /* Optional: Add border */
+    position: relative; /* Required for positioning the form */
+}
+
+/* CSS for the form */
+.map-form {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.map-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.map-form input[type="text"] {
+    width: calc(100% - 22px); /* Adjust as needed */
+    padding: 5px;
+}
+
+.map-form input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.map-form input[type="submit"]:hover {
+    background-color: #0056b3;
 }

@@ -1,12 +1,9 @@
 <?php
 
-// File: database/seeders/DepartmentTableSeeder.php
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Models\Department;
-
 class DepartmentTableSeeder extends Seeder
 {
     /**
@@ -16,6 +13,19 @@ class DepartmentTableSeeder extends Seeder
      */
     public function run()
     {
-        Department::factory(5)->create();
+        // Define department data
+        $departments = [
+            ['Department_Name' => 'Pure and Applied Mathematics'],
+            ['Department_Name' => 'Biology and Bio Sciences'],
+            ['Department_Name' => 'Human Resource and Management'],
+            ['Department_Name' => 'Business and Economics'],
+            ['Department_Name' => 'IT and Technology'],
+        ];
+
+        // Insert data into the departments table
+        foreach ($departments as $departmentData) {
+            // Create a new department instance and insert into the database
+            Department::create($departmentData);
+        }
     }
 }

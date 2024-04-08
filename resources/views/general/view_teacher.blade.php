@@ -3,29 +3,51 @@
 @section('content')
     <h1>View Teachers</h1>
 
+    <!-- Check if there are teachers to display -->
     @if (count($teachers) > 0)
+        <!-- Table to display teachers -->
         <table class="table">
             <thead>
                 <tr>
+                    <!-- ID field -->
                     <th>ID</th>
+                    <!-- Name field -->
                     <th>Name</th>
+                    <!-- Email field -->
                     <th>Email</th>
-                    <th>Course ID</th>
+                    <!-- Department Name field -->
                     <th>Department Name</th>
-                    <th>Department id</th>
+                    <!-- Courses field -->
+                    <th>Courses</th>
+                    <!-- Actions field -->
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
+                <!-- Loop through each teacher and display their details -->
                 @foreach ($teachers as $teacher)
                     <tr>
+                        <!-- Display teacher's ID -->
                         <td>{{ $teacher->id }}</td>
+                        <!-- Display teacher's name -->
                         <td>{{ $teacher->name }}</td>
+                        <!-- Display teacher's email -->
                         <td>{{ $teacher->email }}</td>
-                        <td>{{ $teacher->course_id }}</td>
-                        <td>{{ $teacher->Department_Name }}</td>
-                        <td>{{ $teacher->department_id }}</td>
-
+                        <!-- Display teacher's department name -->
+                        <td>{{ $teacher->department->Department_Name }}</td>
+                        <!-- Display teacher's courses -->
+                        <td>
+                            @if ($teacher->courses->count() > 0)
+                                <ul>
+                                    @foreach ($teacher->courses as $course)
+                                        <li>{{ $course->name }} (Unit: {{ $course->pivot->unit }})</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                No courses assigned
+                            @endif
+                        </td>
+                        <!-- Action to delete teacher -->
                         <td>
                             <form action="{{ route('admin.delete.teacher', $teacher->id) }}" method="POST">
                                 @csrf
@@ -38,13 +60,16 @@
             </tbody>
         </table>
     @else
+        <!-- Message when no teachers found -->
         <p>No teachers found.</p>
     @endif
+
+    <!-- Display success message if present -->
     @if(Session::has('success'))
-    <script>
-        window.onload = function() {
-            alert("{{ Session::get('success') }}");
-        };
-    </script>
+        <script>
+            window.onload = function() {
+                alert("{{ Session::get('success') }}");
+            };
+        </script>
     @endif
 @endsection

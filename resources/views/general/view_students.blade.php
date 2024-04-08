@@ -10,8 +10,9 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Course_Id</th>
-                    <th>Fees</th>
+                    <th>Course ID</th>
+                    <th>Teacher ID</th>
+                    <th>Fee Balance</th>
                     <th>Action</th> <!-- New column for delete action -->
                 </tr>
             </thead>
@@ -22,7 +23,8 @@
                         <td>{{ $student->name }}</td>
                         <td>{{ $student->email }}</td>
                         <td>{{ $student->course_id }}</td>
-                        <td>{{ $student->fees }}</td>
+                        <td>{{ $student->teacher_id }}</td>
+                        <td>{{ $student->fee_balance }}</td>
                         <td>
                             <form action="{{ route('admin.delete.student', $student->id) }}" method="POST">
                                 @csrf

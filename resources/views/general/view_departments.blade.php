@@ -9,20 +9,26 @@
                 <tr>
                     <th>ID</th>
                     <th>Department Name</th>
-                    <th>Course ID</th>
-                    <th>Teacher ID</th>
-                    
-                    <th>Action</th> <!-- New column for delete action -->
+                    <th>Courses</th>
+                    <th>Teachers</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($departments as $department)
                     <tr>
                         <td>{{ $department->id }}</td>
-                        <td>{{ $department->Department_Name }}</td> <!-- Display department name -->
-                        <td>{{ $department->course_id }}</td>
-                        <td>{{ $department->teacher_id }}</td>
-
+                        <td>{{ $department->Department_Name }}</td>
+                        <td>
+                            @foreach ($department->courses as $course)
+                                {{ $course->course_name }}<br>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($department->teachers as $teacher)
+                                {{ $teacher->name }}<br>
+                            @endforeach
+                        </td>
                         <td>
                             <form action="{{ route('admin.delete.department', $department->id) }}" method="POST">
                                 @csrf
@@ -39,15 +45,11 @@
     @endif
 
     <script>
-        // Check if the session has a success message
         @if(Session::has('success'))
-            // Display a JavaScript alert with the success message
             alert('{{ Session::get('success') }}');
         @endif
 
-        // Check if the session has an error message
         @if(Session::has('error'))
-            // Display a JavaScript alert with the error message
             alert('{{ Session::get('error') }}');
         @endif
     </script>

@@ -44,5 +44,14 @@ class Department extends Model
          return $this->hasMany(Student::class);
     }
 
+        /**
+     * Get the admins that belong to the department.
+     */
+    public function admins()
+    {
+        return $this->hasMany(Admin::class);
+    }
+
+
 
 }

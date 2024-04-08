@@ -19,20 +19,8 @@
             <tr>
                 <td>{{ $student->name }}</td>
                 <td>{{ $student->email }}</td>
-                <td>
-                    @foreach ($courses as $course)
-                        @if ($course->id == $student->course_id)
-                            {{ $course->course_name }}
-                        @endif
-                    @endforeach
-                </td>
-                <td>
-                    @foreach ($courses as $course)
-                        @if ($course->id == $student->course_id)
-                            {{ $course->department->name }}
-                        @endif
-                    @endforeach
-                </td>
+                <td>{{ $student->course->course_name }}</td>
+                <td>{{ $student->course->department->name }}</td>
                 <!-- Add more columns as needed -->
             </tr>
         @endforeach

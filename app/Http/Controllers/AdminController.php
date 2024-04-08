@@ -104,46 +104,48 @@ class AdminController extends Controller
     }
 
 
-// Method to show the add student form
-public function showAddStudentForm()
-{
-    return view('general.add_student_form');
-}
 
-// Method to add a student to the database
-public function addStudent(Request $request)
-{
-    // Validate the incoming request data
-    $request->validate([
-        'name' => 'required|string',
-        'email' => 'required|email|unique:students,email',
-        'course_id' => 'required|integer',
-        'fees' => 'required|numeric',
-        'password' => 'required|string',
-    ]);
-
-    // Create a new student instance
-    $student = new Student();
-    $student->name = $request->name;
-    $student->email = $request->email;
-    $student->course_id = $request->course_id;
-    $student->fees = $request->fees;
-    $student->password = bcrypt($request->password); // Encrypt the password
-
-    // Save the student to the database
-    $student->save();
-
-    // Flash the success message to the session
-    Session::flash('success', 'Student added successfully.');
+    // Method to show the add student form
+    public function showAddStudentForm()
+    {
+        return view('general.add_student_form');
+    }
 
 
-    // Redirect back with success message
-    return redirect()->route('admin.add.student')->with('success', 'Student added successfully.');
-}
+    // Method to add a student to the database
+    public function addStudent(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:students,email',
+            'course_id' => 'required|integer',
+            'teacher_id' => 'required|integer', // Added validation for teacher_id
+            'fee_balance' => 'required|numeric', // Added validation for fee_balance
+            'password' => 'required|string',
+        ]);
 
-//Method to View Students from database
-public function viewStudents()
-{
+        // Create a new student instance
+        $student = new Student();
+        $student->name = $request->name;
+        $student->email = $request->email;
+        $student->course_id = $request->course_id;
+        $student->teacher_id = $request->teacher_id; // Assign the teacher_id
+        $student->fee_balance = $request->fee_balance; // Assign the fee_balance
+        $student->password = Hash::make($request->password); // Encrypt the password
+
+        // Save the student to the database
+        $student->save();
+
+        // Flash the success message to the session
+        Session::flash('success', 'Student added successfully.');
+
+        // Redirect back with success message
+        return redirect()->route('admin.add.student')->with('success', 'Student added successfully.');
+    }
+     //Method to View Students from database
+     public function viewStudents()
+    {
     try {
         // Fetch students from the database
         $students = Student::all();
@@ -157,12 +159,12 @@ public function viewStudents()
         // Redirect back or return an error view
         return redirect()->back()->with('error', 'Failed to fetch student data.');
     }
-}
+    }
 
 
-//delete student
-public function deleteStudent($id)
-{
+     //delete student
+    public function deleteStudent($id)
+    {
     try {
         // Find the student by ID
         $student = Student::findOrFail($id);
@@ -185,10 +187,10 @@ public function deleteStudent($id)
         // Redirect back
         return redirect()->back();
     }
-}
+    }
 
 
-//Teacher Crud operations
+     // Teacher Crud operations
 public function showAddTeacherForm()
 {
     return view('general.add_teacher_form');
@@ -200,9 +202,7 @@ public function addTeacher(Request $request)
     $request->validate([
         'name' => 'required|string',
         'email' => 'required|email|unique:teachers,email',
-        'course_id' => 'required|integer',
         'department_id' => 'required|string', // Update to department_id
-        'Department_Name' => 'required|string', // Update to Department_Name
         'password' => 'required|string|min:6', // Validation rule for password
         // Add more validation rules as needed
     ]);
@@ -211,9 +211,7 @@ public function addTeacher(Request $request)
     $teacher = new Teacher();
     $teacher->name = $request->name;
     $teacher->email = $request->email;
-    $teacher->course_id = $request->course_id;
     $teacher->department_id = $request->department_id; // Use department_id
-    $teacher->Department_Name = $request->Department_Name; // Use Department_Name
     $teacher->password = Hash::make($request->password); // Hash the password
 
     // Set other properties
@@ -230,11 +228,18 @@ public function addTeacher(Request $request)
 
 
 
+
+
+
 public function viewTeachers()
 {
-    $teachers = Teacher::all();
+    // Fetch teachers along with their associated courses
+    $teachers = Teacher::with('courses')->get();
+
+    // Pass the teachers data to the view
     return view('general.view_teacher', compact('teachers'));
 }
+
 
 public function deleteTeacher($id)
 {
@@ -385,16 +390,12 @@ public function storeDepartment(Request $request)
 {
     $request->validate([
         'Department_Name' => 'required|string',
-        'course_id' => 'required|string',
-        'teacher_id' => 'required|string',
-
+        // Remove 'course_id' and 'teacher_id' validation rules
         // Add more validation rules as needed
     ]);
 
     $department = new Department();
     $department->Department_Name = $request->Department_Name;
-    $department->course_id = $request->course_id;
-    $department->teacher_id = $request->teacher_id;
 
     // Set other properties
 
@@ -414,16 +415,12 @@ public function updateDepartment(Request $request, $id)
 {
     $request->validate([
         'Department_Name' => 'required|string',
-        'course_id' => 'required|string',
-        'teacher_id' => 'required|string',
-
+        // Remove 'course_id' and 'teacher_id' validation rules
         // Add more validation rules as needed
     ]);
 
     $department = Department::findOrFail($id);
     $department->Department_Name = $request->Department_Name;
-    $department->course_id = $request->course_id;
-    $department->teacher_id = $request->teacher_id;
 
     // Update other properties
 
@@ -432,6 +429,7 @@ public function updateDepartment(Request $request, $id)
     Session::flash('success', 'Department updated successfully.');
     return redirect()->route('admin.view.departments');
 }
+
 
 public function deleteDepartment($id)
 {

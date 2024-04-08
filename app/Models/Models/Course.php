@@ -14,6 +14,7 @@ class Course extends Model
     protected $fillable = [
         'course_name',
         'department_id',
+        'teacher_id',
         // Add other fillable fields here if needed
     ];
 
@@ -28,6 +29,7 @@ class Course extends Model
     /**
      * The teacher that belongs to the course.
      */
+    // Define the relationship with the Teacher model
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);
